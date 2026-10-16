@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mockup 2 - Floating Sky</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { overflow-x: hidden; }
+    body {
+      margin: 0;
+      padding: 32px 16px 72px;
+      font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+      color: #51608a;
+      background: linear-gradient(180deg, #bfe0fa 0%, #d9d4f6 50%, #f9d3e2 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .scene {
+      position: relative;
+      max-width: 520px;
+      margin: 0 auto 56px;
+      padding-top: 8px;
+    }
+    .view-label {
+      margin: 0 0 14px;
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6f7fa8;
+    }
+
+    /* Soft decorative clouds drifting in the background (laptop sides, phone corners) */
+    .bg-cloud {
+      position: absolute; width: 90px; height: 32px; border-radius: 32px;
+      background: rgba(255, 255, 255, 0.6);
+    }
+    .bg-cloud::before, .bg-cloud::after {
+      content: ""; position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.6);
+    }
+    .bg-cloud::before { width: 38px; height: 38px; top: -18px; left: 14px; }
+    .bg-cloud::after  { width: 28px; height: 28px; top: -12px; left: 48px; }
+    .bg-cloud.a { top: 0; left: -30px; }
+    .bg-cloud.b { top: 110px; right: -30px; transform: scale(0.8); }
+    @media (min-width: 700px) {
+      .bg-cloud.a { left: -170px; top: 20px; transform: scale(1.5); }
+      .bg-cloud.b { right: -170px; top: 160px; transform: scale(1.2); }
+    }
+
+    /* Pill search bar with the button tucked inside the right end */
+    .pill {
+      position: relative; z-index: 1;
+      display: flex; align-items: center;
+      padding: 6px 6px 6px 22px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 999px;
+      box-shadow: 0 8px 24px rgba(150, 165, 215, 0.3);
+    }
+    .pill input {
+      flex: 1; min-width: 0;
+      font-size: 16px; color: #51608a;
+      border: none; background: transparent; outline: none;
+    }
+    .pill input::placeholder { color: #aab6d2; }
+    .pill button {
+      padding: 12px 22px;
+      font-size: 15px; font-weight: 600; color: #fff;
+      background: linear-gradient(135deg, #8fc3f0, #f2a3c3);
+      border: none; border-radius: 999px;
+    }
+
+    .card {
+      position: relative; z-index: 1;
+      margin-top: 78px;
+      padding: 62px 24px 28px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.88);
+      border-radius: 30px;
+      box-shadow: 0 14px 34px rgba(150, 165, 215, 0.3);
+    }
+    .card.simple { margin-top: 28px; padding-top: 28px; }
+
+    /* Drawn picture overlapping the card's top edge */
+    .wx { position: absolute; top: -48px; left: 50%; width: 130px; height: 92px; margin-left: -65px; }
+    .sun {
+      position: absolute; top: 0; right: 12px; width: 60px; height: 60px; border-radius: 50%;
+      background: #ffe3a6; box-shadow: 0 0 0 10px rgba(255, 227, 166, 0.5);
+    }
+    .cloud {
+      position: absolute; bottom: 0; left: 8px; width: 96px; height: 40px; border-radius: 40px;
+      background: #e2effc; box-shadow: 0 5px 12px rgba(150, 175, 225, 0.35);
+    }
+    .cloud::before, .cloud::after { content: ""; position: absolute; border-radius: 50%; background: #e2effc; }
+    .cloud::before { width: 46px; height: 46px; top: -23px; left: 14px; }
+    .cloud::after  { width: 34px; height: 34px; top: -15px; left: 52px; }
+
+    .city { margin: 0; font-size: 24px; font-weight: 600; }
+    .temp { margin: 2px 0; font-size: 60px; font-weight: 300; color: #6679b0; }
+    .desc { margin: 0 0 18px; font-size: 17px; color: #8f9bbb; }
+    .row { display: flex; justify-content: center; gap: 12px; }
+    .chip {
+      padding: 10px 18px; border-radius: 999px; font-size: 15px; background: #f7eefa;
+    }
+    .chip b { color: #6679b0; }
+
+    /* Loading: a soft pulsing circle */
+    .pulse {
+      width: 56px; height: 56px; margin: 12px auto 36px; border-radius: 50%;
+      background: radial-gradient(circle, #ffffff 0%, #cfe5fa 60%, #f6cfe0 100%);
+      box-shadow: 0 0 0 10px rgba(207, 229, 250, 0.5), 0 0 0 20px rgba(246, 207, 224, 0.35);
+    }
+    .note { margin: 0; font-size: 17px; color: #7d8bb0; }
+
+    /* Not found: a friendly speech-bubble style note */
+    .bubble {
+      position: relative; z-index: 1;
+      margin: 30px auto 0; max-width: 380px; padding: 18px 22px;
+      text-align: center; font-size: 17px; color: #6a5a82;
+      background: #fbe4ee; border-radius: 22px;
+    }
+    .bubble::before {
+      content: ""; position: absolute; top: -10px; left: 50%; margin-left: -10px;
+      border: 10px solid transparent; border-top: 0; border-bottom-color: #fbe4ee;
+    }
+    .bubble small { display: block; margin-top: 4px; font-size: 14px; color: #9a8bb0; }
+  </style>
+</head>
+<body>
+
+  <div class="scene">
+    <div class="bg-cloud a"></div><div class="bg-cloud b"></div>
+    <p class="view-label">Before searching</p>
+    <div class="pill">
+      <input type="text" placeholder="Type a city name" aria-label="City name">
+      <button type="button">Search</button>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="bg-cloud a"></div><div class="bg-cloud b"></div>
+    <p class="view-label">Loading...</p>
+    <div class="pill">
+      <input type="text" value="Rosewood Bay" aria-label="City name">
+      <button type="button">Search</button>
+    </div>
+    <div class="card simple">
+      <div class="pulse"></div>
+      <p class="note">Loading...</p>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="bg-cloud a"></div><div class="bg-cloud b"></div>
+    <p class="view-label">Weather result</p>
+    <div class="pill">
+      <input type="text" value="Rosewood Bay" aria-label="City name">
+      <button type="button">Search</button>
+    </div>
+    <div class="card">
+      <div class="wx"><div class="sun"></div><div class="cloud"></div></div>
+      <p class="city">Rosewood Bay</p>
+      <p class="temp">24°C</p>
+      <p class="desc">Partly cloudy</p>
+      <div class="row">
+        <div class="chip">Humidity <b>58%</b></div>
+        <div class="chip">Wind <b>12 km/h</b></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="bg-cloud a"></div><div class="bg-cloud b"></div>
+    <p class="view-label">City not found</p>
+    <div class="pill">
+      <input type="text" value="Rosewod Bay" aria-label="City name">
+      <button type="button">Search</button>
+    </div>
+    <div class="bubble">
+      We couldn't find that city.
+      <small>Please check the spelling and try again.</small>
+    </div>
+  </div>
+
+</body>
+</html>
