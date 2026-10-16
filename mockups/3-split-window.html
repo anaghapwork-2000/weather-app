@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mockup 3 - Split Window</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px 16px 64px;
+      font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+      color: #4f5f88;
+      background: #f1f3fb;
+    }
+    .view-label {
+      max-width: 960px;
+      margin: 36px auto 10px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #7684ab;
+    }
+    .view-label:first-of-type { margin-top: 0; }
+
+    /* Two panels: stacked on phones, side by side on laptops */
+    .window {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 12px 34px rgba(140, 155, 210, 0.28);
+    }
+    @media (min-width: 720px) {
+      .window { flex-direction: row; min-height: 420px; }
+      .panel { flex: 1; }
+    }
+    .panel { padding: 32px 26px; display: flex; flex-direction: column; justify-content: center; }
+    .left  { background: linear-gradient(170deg, #bfe0fa, #d6e6fb); }
+    .right { background: linear-gradient(170deg, #f9dbe8, #fdeaf1); text-align: center; align-items: center; }
+
+    .left h1 { margin: 0 0 6px; font-size: 26px; font-weight: 600; color: #4d6397; }
+    .left p  { margin: 0 0 22px; font-size: 16px; color: #6a7fae; }
+    .left input {
+      width: 100%; padding: 14px 18px; margin-bottom: 12px;
+      font-size: 16px; color: #4f5f88;
+      background: rgba(255, 255, 255, 0.85);
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      border-radius: 16px;
+    }
+    .left input::placeholder { color: #a3b1d0; }
+    .left button {
+      width: 100%; padding: 14px 24px;
+      font-size: 16px; font-weight: 600; color: #fff;
+      background: linear-gradient(135deg, #86b9ec, #ef9fc0);
+      border: none; border-radius: 16px;
+    }
+
+    /* Drawn weather picture */
+    .wx { position: relative; width: 120px; height: 84px; margin-bottom: 10px; }
+    .sun {
+      position: absolute; top: 0; right: 10px; width: 54px; height: 54px; border-radius: 50%;
+      background: #ffe3a6; box-shadow: 0 0 0 9px rgba(255, 227, 166, 0.5);
+    }
+    .cloud {
+      position: absolute; bottom: 0; left: 8px; width: 86px; height: 36px; border-radius: 36px;
+      background: #ffffff; box-shadow: 0 4px 10px rgba(220, 150, 180, 0.3);
+    }
+    .cloud::before, .cloud::after { content: ""; position: absolute; border-radius: 50%; background: #ffffff; }
+    .cloud::before { width: 40px; height: 40px; top: -20px; left: 12px; }
+    .cloud::after  { width: 30px; height: 30px; top: -13px; left: 46px; }
+
+    .city { margin: 0; font-size: 24px; font-weight: 600; color: #6a4f72; }
+    .temp { margin: 2px 0; font-size: 64px; font-weight: 300; color: #8a5f86; line-height: 1.1; }
+    .desc { margin: 0 0 20px; font-size: 17px; color: #a58aa6; }
+    .details { display: flex; gap: 12px; width: 100%; max-width: 320px; }
+    .detail {
+      flex: 1; padding: 12px 8px; font-size: 15px; color: #7a6280;
+      background: rgba(255, 255, 255, 0.7); border-radius: 16px;
+    }
+    .detail b { display: block; font-size: 18px; color: #8a5f86; }
+
+    .note { margin: 0; font-size: 17px; color: #94798f; }
+    .note small { display: block; margin-top: 6px; font-size: 14px; color: #b39db0; }
+    .dots span {
+      display: inline-block; width: 12px; height: 12px; margin: 0 4px 12px;
+      border-radius: 50%; background: #f4b9d0;
+    }
+    .dots span:nth-child(2) { background: #e3c4ec; }
+    .dots span:nth-child(3) { background: #bcd8f6; }
+    .empty-hint { font-size: 17px; color: #b39db0; }
+  </style>
+</head>
+<body>
+
+  <div class="view-label">Before searching</div>
+  <div class="window">
+    <div class="panel left">
+      <h1>Weather App</h1>
+      <p>Which city's weather would you like to see?</p>
+      <input type="text" placeholder="Type a city name" aria-label="City name">
+      <button type="button">Search</button>
+    </div>
+    <div class="panel right">
+      <div class="wx"><div class="sun"></div><div class="cloud"></div></div>
+      <p class="empty-hint">Your weather will appear here</p>
+    </div>
+  </div>
+
+  <div class="view-label">Loading...</div>
+  <div class="window">
+    <div class="panel left">
+      <h1>Weather App</h1>
+      <p>Which city's weather would you like to see?</p>
+      <input type="text" value="Rosewood Bay" aria-label="City name">
+      <button type="button">Search</button>
+    </div>
+    <div class="panel right">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <p class="note">Loading...</p>
+    </div>
+  </div>
+
+  <div class="view-label">Weather result</div>
+  <div class="window">
+    <div class="panel left">
+      <h1>Weather App</h1>
+      <p>Which city's weather would you like to see?</p>
+      <input type="text" value="Rosewood Bay" aria-label="City name">
+      <button type="button">Search</button>
+    </div>
+    <div class="panel right">
+      <div class="wx"><div class="sun"></div><div class="cloud"></div></div>
+      <p class="city">Rosewood Bay</p>
+      <p class="temp">24°C</p>
+      <p class="desc">Partly cloudy</p>
+      <div class="details">
+        <div class="detail"><b>58%</b>Humidity</div>
+        <div class="detail"><b>12 km/h</b>Wind</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="view-label">City not found</div>
+  <div class="window">
+    <div class="panel left">
+      <h1>Weather App</h1>
+      <p>Which city's weather would you like to see?</p>
+      <input type="text" value="Rosewod Bay" aria-label="City name">
+      <button type="button">Search</button>
+    </div>
+    <div class="panel right">
+      <div class="wx" style="height:56px"><div class="cloud" style="left:17px"></div></div>
+      <p class="note">We couldn't find that city.<small>Please check the spelling and try again.</small></p>
+    </div>
+  </div>
+
+</body>
+</html>
