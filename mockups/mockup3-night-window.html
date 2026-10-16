@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup 3 - Night Window</title>
+<style>
+  :root { --black:#111; --coral:#ff6b5b; --cream:#fff6f2; --radius:12px; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,Arial,sans-serif; background:#e9e9e9; color:var(--black); }
+  .label { margin:0; padding:20px 16px 8px; font-size:14px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#555; }
+  .frame { margin:0 16px 24px; border-radius:var(--radius); background:var(--black); color:#fff; padding:28px 16px; min-height:420px; }
+  @media (min-width:800px) { .frame { margin:0 32px 32px; padding:40px; } }
+  h1 { margin:0 0 16px; text-align:center; font-size:28px; } h1 span { color:var(--coral); }
+  .search { display:flex; flex-direction:column; gap:10px; max-width:520px; margin:0 auto 24px; }
+  @media (min-width:800px) { .search { flex-direction:row; } .search input { flex:1; } }
+  input { padding:14px; font-size:16px; border:2px solid #444; border-radius:var(--radius); background:#1d1d1d; color:#fff; }
+  button { padding:14px 26px; font-size:16px; font-weight:700; border:0; border-radius:var(--radius); background:var(--coral); color:var(--black); }
+  .window { max-width:420px; margin:0 auto; border-radius:var(--radius); overflow:hidden; background:var(--cream); color:var(--black); text-align:center; }
+  .top { background:var(--coral); padding:20px 16px 14px; }
+  .top .emoji { font-size:72px; line-height:1; } .top h2 { margin:4px 0 0; font-size:24px; }
+  .bottom { padding:20px; }
+  .temp { font-size:72px; font-weight:800; line-height:1.1; }
+  .desc { font-size:20px; margin-bottom:16px; color:#444; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .stat { border-top:3px solid var(--coral); padding-top:8px; } .stat b { display:block; font-size:22px; } .stat span { color:#666; font-size:14px; }
+  .center { text-align:center; padding:48px 16px; }
+  .center .big { font-size:56px; display:block; margin-bottom:8px; }
+  .pulse { display:inline-block; width:14px; height:14px; border-radius:50%; background:var(--coral); box-shadow:0 0 0 6px rgba(255,107,91,.3); margin-right:8px; vertical-align:middle; }
+  .small-card { max-width:380px; margin:0 auto; background:var(--cream); color:var(--black); border-radius:var(--radius); padding:24px; text-align:center; border:3px solid var(--coral); }
+  .small-card .big { font-size:56px; display:block; } .small-card h2 { margin:6px 0; } .small-card p { margin:0; color:#555; }
+</style>
+</head>
+<body>
+
+<p class="label">Before searching</p>
+<div class="frame">
+  <h1>Weather <span>App</span></h1>
+  <div class="search"><input placeholder="Search for a city..." aria-label="City"><button>Search</button></div>
+  <div class="center"><span class="big">🌙</span>Type a city above to see its weather.</div>
+</div>
+
+<p class="label">Loading</p>
+<div class="frame">
+  <h1>Weather <span>App</span></h1>
+  <div class="search"><input value="Lisbon" aria-label="City"><button>Search</button></div>
+  <div class="center"><span class="pulse"></span>Loading...</div>
+</div>
+
+<p class="label">Weather result</p>
+<div class="frame">
+  <h1>Weather <span>App</span></h1>
+  <div class="search"><input value="Lisbon" aria-label="City"><button>Search</button></div>
+  <div class="window">
+    <div class="top"><div class="emoji">⛅</div><h2>Lisbon, Portugal</h2></div>
+    <div class="bottom"><div class="temp">24°C</div><div class="desc">Partly cloudy</div>
+      <div class="row"><div class="stat">💧 <b>58%</b><span>Humidity</span></div><div class="stat">💨 <b>14 km/h</b><span>Wind</span></div></div></div>
+  </div>
+</div>
+
+<p class="label">City not found</p>
+<div class="frame">
+  <h1>Weather <span>App</span></h1>
+  <div class="search"><input value="Atlantiss" aria-label="City"><button>Search</button></div>
+  <div class="small-card"><span class="big">🧭</span><h2>We couldn't find that city</h2><p>Please check the spelling and try again.</p></div>
+</div>
+
+</body>
+</html>

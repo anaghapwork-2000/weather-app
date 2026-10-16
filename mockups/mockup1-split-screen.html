@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup 1 - Split Screen</title>
+<style>
+  :root { --black:#111; --coral:#ff6b5b; --cream:#fff6f2; --radius:12px; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,Arial,sans-serif; background:#e9e9e9; color:var(--black); }
+  .label { margin:0; padding:20px 16px 8px; font-size:14px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#555; }
+  .frame { display:grid; grid-template-columns:1fr; min-height:340px; margin:0 16px 16px; border-radius:var(--radius); overflow:hidden; }
+  @media (min-width:800px) { .frame { grid-template-columns:1fr 1fr; min-height:420px; margin:0 32px 24px; } }
+  .left { background:var(--black); color:#fff; padding:32px 24px; display:flex; flex-direction:column; justify-content:center; gap:16px; }
+  .left h1 { margin:0; font-size:28px; } .left h1 span { color:var(--coral); }
+  .left p { margin:0; color:#bbb; }
+  .search { display:flex; flex-direction:column; gap:10px; }
+  @media (min-width:800px) { .search { flex-direction:row; } .search input { flex:1; } }
+  input { padding:14px; font-size:16px; border:2px solid #444; border-radius:var(--radius); background:#1d1d1d; color:#fff; }
+  button { padding:14px 22px; font-size:16px; font-weight:700; border:0; border-radius:var(--radius); background:var(--coral); color:var(--black); }
+  .right { background:var(--cream); padding:24px; display:flex; align-items:center; justify-content:center; }
+  .hint { color:#777; text-align:center; font-size:18px; }
+  .hint .big { font-size:56px; display:block; }
+  .result { width:100%; max-width:360px; text-align:center; }
+  .result .emoji { font-size:84px; line-height:1; }
+  .result h2 { margin:8px 0 0; font-size:26px; }
+  .result .temp { font-size:76px; font-weight:800; color:var(--coral); line-height:1.1; }
+  .result .desc { font-size:20px; margin-bottom:16px; }
+  .boxes { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .box { background:#fff; border:2px solid var(--black); border-radius:var(--radius); padding:12px; }
+  .box b { display:block; font-size:22px; } .box span { color:#666; font-size:14px; }
+  .error { max-width:340px; text-align:center; border:2px solid var(--coral); background:#fff; border-radius:var(--radius); padding:24px; }
+  .error .big { font-size:56px; display:block; } .error h2 { margin:8px 0; } .error p { margin:0; color:#555; }
+</style>
+</head>
+<body>
+
+<p class="label">Before searching</p>
+<div class="frame">
+  <div class="left"><h1>Weather <span>App</span></h1><p>Type a city to see its weather.</p>
+    <div class="search"><input placeholder="Search for a city..." aria-label="City"><button>Search</button></div></div>
+  <div class="right"><div class="hint"><span class="big">🌍</span>Your weather will appear here</div></div>
+</div>
+
+<p class="label">Loading</p>
+<div class="frame">
+  <div class="left"><h1>Weather <span>App</span></h1><p>Type a city to see its weather.</p>
+    <div class="search"><input value="Lisbon" aria-label="City"><button>Search</button></div></div>
+  <div class="right"><div class="hint"><span class="big">⏳</span>Loading...</div></div>
+</div>
+
+<p class="label">Weather result</p>
+<div class="frame">
+  <div class="left"><h1>Weather <span>App</span></h1><p>Type a city to see its weather.</p>
+    <div class="search"><input value="Lisbon" aria-label="City"><button>Search</button></div></div>
+  <div class="right"><div class="result">
+    <div class="emoji">⛅</div><h2>Lisbon, Portugal</h2>
+    <div class="temp">24°C</div><div class="desc">Partly cloudy</div>
+    <div class="boxes"><div class="box">💧 <b>58%</b><span>Humidity</span></div><div class="box">💨 <b>14 km/h</b><span>Wind</span></div></div>
+  </div></div>
+</div>
+
+<p class="label">City not found</p>
+<div class="frame">
+  <div class="left"><h1>Weather <span>App</span></h1><p>Type a city to see its weather.</p>
+    <div class="search"><input value="Atlantiss" aria-label="City"><button>Search</button></div></div>
+  <div class="right"><div class="error"><span class="big">🤔</span><h2>We couldn't find that city</h2><p>Please check the spelling and try again.</p></div></div>
+</div>
+
+</body>
+</html>
